@@ -1,151 +1,80 @@
--- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
---
--- Host: localhost    Database: clinica
--- ------------------------------------------------------
--- Server version	8.0.44
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `consultas`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `consultas` (
-  `Hora` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `consultas`
---
-
-LOCK TABLES `consultas` WRITE;
-/*!40000 ALTER TABLE `consultas` DISABLE KEYS */;
-/*!40000 ALTER TABLE `consultas` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `convenios`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `convenios` (
-  `nome` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `convenios`
---
-
-LOCK TABLES `convenios` WRITE;
-/*!40000 ALTER TABLE `convenios` DISABLE KEYS */;
-/*!40000 ALTER TABLE `convenios` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `especialidades`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `especialidades` (
-  `nome` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `especialidades`
---
-
-LOCK TABLES `especialidades` WRITE;
-/*!40000 ALTER TABLE `especialidades` DISABLE KEYS */;
-/*!40000 ALTER TABLE `especialidades` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `medicos`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `medicos` (
-  `nome` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `medicos`
---
-
-LOCK TABLES `medicos` WRITE;
-/*!40000 ALTER TABLE `medicos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `medicos` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `paciente`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `paciente` (
-  `nome` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `paciente`
---
-
-LOCK TABLES `paciente` WRITE;
-/*!40000 ALTER TABLE `paciente` DISABLE KEYS */;
-/*!40000 ALTER TABLE `paciente` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `usuarios`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `usuarios` (
-  `nome` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `usuarios`
---
-
-LOCK TABLES `usuarios` WRITE;
-/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping routines for database 'clinica'
---
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2026-01-02 18:51:08
+USE clinica;
+CREATE TABLE convenio (
+    id_convenio INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    registro_ans CHAR(6) NOT NULL UNIQUE,
+    ativo boolean default TRUE
+);
+CREATE TABLE paciente (
+    id_paciente INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    nome VARCHAR(100) NOT NULL,
+    cpf VARCHAR(14) NOT NULL UNIQUE,
+    data_nascimento DATE NOT NULL,
+      ddd CHAR(2) NOT NULL,
+    numero VARCHAR(9) NOT NULL,
+    foreign key(id_convenio) references convenio(id_convenio)
+);
+CREATE TABLE especialidade (
+    id_especialidade INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL UNIQUE
+);
+CREATE TABLE medico (
+    id_medico INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) not null,
+    crm VARCHAR(20) UNIQUE NOT NULL,
+    ativo boolean default true,
+    id_especialidade INT NOT NULL,
+    foreign key(id_especialidade) 
+    references especialidade(id_especialidade)
+);
+CREATE TABLE agenda(
+	id_agenda INT NOT NULL auto_increment PRIMARY KEY,
+    id_medico INT NOT NULL,
+    situacao ENUM(
+    'Livre',
+    'Ocupado',
+    'Bloqueado'
+        ) NOT NULL DEFAULT 'Livre',
+	data_slot DATE NOT NULL,
+    hora_slot TIME NOT NULL,
+    
+    UNIQUE( data_slot , hora_slot),
+    FOREIGN KEY (id_medico) REFERENCES medico(id_medico)
+);
+CREATE TABLE consulta (
+    id_consulta INT AUTO_INCREMENT PRIMARY KEY,
+    
+    id_paciente INT NOT NULL,
+    id_agenda INT,
+    status_consulta ENUM(
+        'Agendada', 
+        'Confirmada', 
+        'Em Espera', 
+        'Em Atendimento', 
+        'Realizada', 
+        'Cancelada', 
+        'Faltou'
+    ) DEFAULT 'Agendada',
+    FOREIGN KEY (id_paciente) references paciente(id_paciente),
+    FOREIGN KEY (id_agenda) references agenda(id_agenda),
+    UNIQUE(id_agenda)
+);
+-- 7. Tabela de Usuários (para login no sistema)
+CREATE TABLE usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100),
+    email varchar(100),
+    senha VARCHAR(255),
+    perfil ENUM('Paciente', 'medico', 'administrador') NOT NULL 
+    default 'administrador'
+    );
+CREATE TABLE prontuario(
+	id_prontuario INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_consulta INT NOT NULL,
+    FOREIGN KEY(id_consulta) REFERENCES consulta(id_consulta),
+    descricao TEXT NOT NULL,
+    prescricao TEXT NOT NULL,
+    diagnostico TEXT NOT NULL,
+    
+    UNIQUE(id_consulta)
+)
